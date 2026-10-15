@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact Us | Cars Dealership</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #263238;
+        }
+
+        .navbar, footer {
+            background: #102a43;
+        }
+
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+
+        .nav-item.active .nav-link {
+            color: #7dd3fc !important;
+            font-weight: bold;
+            border-bottom: 2px solid #7dd3fc;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #102a43, #247ba0);
+            color: white;
+            text-align: center;
+            padding: 55px 20px;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            height: 100%;
+            box-shadow: 0 5px 18px rgba(0,0,0,.08);
+        }
+
+        .contact-icon {
+            font-size: 28px;
+            color: #247ba0;
+            margin-bottom: 12px;
+        }
+
+        .contact-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        footer {
+            color: white;
+            text-align: center;
+            padding: 22px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/">Cars Dealership</a>
+
+        <button class="navbar-toggler" type="button"
+                data-toggle="collapse" data-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="About.html">About Us</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="Contact.html"
+                       aria-current="page">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p class="lead mb-0">
+                We're here to help with your dealership questions.
+            </p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <div class="row align-items-center">
+            <section class="col-lg-6 mb-4">
+                <h2>Get in Touch</h2>
+                <p>
+                    Have a question about a dealership or customer review?
+                    Contact our support team for assistance.
+                </p>
+
+                <img class="contact-image"
+                     src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80"
+                     alt="Modern office building">
+            </section>
+
+            <section class="col-lg-6">
+                <article class="contact-card mb-3">
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <h3 class="h5">Email Support</h3>
+                    <p>For general questions and assistance.</p>
+                    <a href="mailto:support@carsdealership.example">
+                        support@carsdealership.example
+                    </a>
+                </article>
+
+                <article class="contact-card mb-3">
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <h3 class="h5">Phone Support</h3>
+                    <p>Monday–Friday, 9:00 AM–5:00 PM Central Time.</p>
+                    <a href="tel:+18005550100">+1 (800) 555-0100</a>
+                </article>
+
+                <article class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <h3 class="h5">Office</h3>
+                    <p>Cars Dealership Customer Support<br>
+                       United States</p>
+                    <p class="mb-0">
+                        Contact us by email for office and mailing details.
+                    </p>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p class="mb-0">
+            &copy; 2026 Cars Dealership. All rights reserved.
+        </p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
