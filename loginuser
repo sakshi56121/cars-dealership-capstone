@@ -1,13 +1,12 @@
-Cars Dealership Capstone - Login API Test
+Task 5: Login User
 
 Endpoint: POST /login/
 Content-Type: application/json
 
-Request body:
-{"username": "<your-username>", "password": "<redacted>"}
+Request: Valid username and password supplied interactively.
 
-Successful response:
+Output:
 HTTP 200
-{"message": "Login successful.", "username": "<your-username>"}
+{"message": "Login successful.", "username": "sakshi_Walzade"}
 
 Result: PASS
