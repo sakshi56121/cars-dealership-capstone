@@ -1,0 +1,11 @@
+Cars Dealership Capstone - Logout API Test
+
+Endpoint: POST /logout/
+Method: POST
+Authentication: Session cookie from successful login
+
+Successful response:
+HTTP 200
+{"message": "Logout successful."}
+
+Result: PASS

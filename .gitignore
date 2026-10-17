@@ -1,0 +1,5 @@
+venv/
+session_cookie.txt
+test_auth.py
+db.sqlite3
+__pycache__/
