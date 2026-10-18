@@ -1,0 +1,13 @@
+Task 8: Get Dealer Reviews
+
+Request:
+curl -i http://127.0.0.1:8000/dealer/1/reviews/
+
+Response status:
+HTTP/1.1 200 OK
+
+Response body:
+{"dealer_id": 1, "reviews": [{"id": 1, "dealership": 1, "name": "Alex", "review": "Excellent customer service and helpful staff."}, {"id": 2, "dealership": 1, "name": "Jordan", "review": "The buying process was smooth and easy."}]}
+
+Note:
+This endpoint currently uses demonstration review data, not the original IBM dealership dataset.
