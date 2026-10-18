@@ -4,13 +4,15 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+
 @csrf_exempt
 @require_POST
 def login_user(request):
     try:
         data = json.loads(request.body)
     except (json.JSONDecodeError, UnicodeDecodeError):
-        return JsonResponse({"error": "Invalid JSON request body."}, status=400)
+        return JsonResponse(
+            {"error": "Invalid JSON request body."}, status=400)
 
     user = authenticate(
         request,
@@ -19,13 +21,15 @@ def login_user(request):
     )
 
     if user is None:
-        return JsonResponse({"error": "Invalid username or password."}, status=401)
+        return JsonResponse(
+            {"error": "Invalid username or password."}, status=401)
 
     login(request, user)
     return JsonResponse({
         "message": "Login successful.",
         "username": user.get_username(),
     })
+
 
 @csrf_exempt
 @require_POST
