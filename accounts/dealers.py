@@ -51,3 +51,33 @@ def get_dealer_by_id(request, dealer_id):
         )
 
     return JsonResponse(dealer, status=200)
+
+
+# Sample Kansas record for testing the state filter.
+SAMPLE_DEALERS.append({
+    "id": 4,
+    "full_name": "Kansas Sample Motors",
+    "city": "Wichita",
+    "state": "Kansas",
+    "address": "400 Main Street",
+    "zip": "67202",
+    "phone": "555-0104",
+})
+
+
+@require_GET
+def get_dealers_by_state(request):
+    state = request.GET.get("state", "").strip()
+
+    if not state:
+        return JsonResponse(
+            {"error": "Please provide a state query parameter."},
+            status=400,
+        )
+
+    dealers = [
+        dealer for dealer in SAMPLE_DEALERS
+        if dealer["state"].lower() == state.lower()
+    ]
+
+    return JsonResponse(dealers, safe=False, status=200)

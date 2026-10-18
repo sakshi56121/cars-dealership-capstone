@@ -1,0 +1,2 @@
+$ curl "http://127.0.0.1:8000/dealers/by-state/?state=Kansas"
+[{"id": 4, "full_name": "Kansas Sample Motors", "city": "Wichita", "state": "Kansas", "address": "400 Main Street", "zip": "67202", "phone": "555-0104"}]
