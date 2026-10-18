@@ -1,0 +1,2 @@
+$ curl http://127.0.0.1:8000/dealer/1/
+{"id": 1, "full_name": "Sample Auto Center", "city": "Houston", "state": "Texas", "address": "100 Main Street", "zip": "77001", "phone": "555-0101"}

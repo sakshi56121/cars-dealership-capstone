@@ -35,3 +35,19 @@ SAMPLE_DEALERS = [
 @require_GET
 def get_all_dealers(request):
     return JsonResponse(SAMPLE_DEALERS, safe=False, status=200)
+
+
+@require_GET
+def get_dealer_by_id(request, dealer_id):
+    dealer = next(
+        (item for item in SAMPLE_DEALERS if item["id"] == dealer_id),
+        None,
+    )
+
+    if dealer is None:
+        return JsonResponse(
+            {"error": "Dealer not found."},
+            status=404,
+        )
+
+    return JsonResponse(dealer, status=200)
