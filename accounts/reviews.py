@@ -26,6 +26,7 @@ SAMPLE_REVIEWS = {
     ]
 }
 
+
 @require_GET
 def get_dealer_reviews(request, dealer_id):
     reviews = SAMPLE_REVIEWS.get(dealer_id)
