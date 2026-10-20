@@ -8,7 +8,10 @@ from accounts.views import (
     djangoapp_login,
     djangoapp_logout,
 )
-from accounts.reviews import get_dealer_reviews
+from accounts.reviews import (
+    get_dealer_reviews,
+    fetch_dealer_reviews,
+)
 from accounts.dealers import (
     get_all_dealers,
     get_dealer_by_id,
@@ -32,6 +35,11 @@ urlpatterns = [
         "dealer/<int:dealer_id>/reviews/",
         get_dealer_reviews,
         name="get_dealer_reviews",
+    ),
+    path(
+        "fetchReviews/dealer/<int:dealer_id>",
+        fetch_dealer_reviews,
+        name="fetch_dealer_reviews",
     ),
 
     # Dealer endpoints

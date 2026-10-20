@@ -1,2 +1,6 @@
-$ curl http://127.0.0.1:8000/dealer/1/reviews/
-{"dealer_id": 1, "reviews": [{"id": 1, "dealership": 1, "name": "Alex", "review": "Excellent customer service and helpful staff."}, {"id": 2, "dealership": 1, "name": "Jordan", "review": "The buying process was smooth and easy."}]}
+$ curl -i http://127.0.0.1:8000/fetchReviews/dealer/1
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"dealer_id": 1, "reviews": [{"id": 1, "dealership": 1, "name": "Alex", "review": "Excellent customer service and helpful staff.", "purchase": {"car_make": "Toyota", "car_model": "Camry", "car_year": 2024, "purchase_date": "2026-01-15"}}, {"id": 2, "dealership": 1, "name": "Jordan", "review": "The buying process was smooth and easy.", "purchase": {"car_make": "Honda", "car_model": "Civic", "car_year": 2023, "purchase_date": "2026-02-10"}}]}

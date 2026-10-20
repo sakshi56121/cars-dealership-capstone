@@ -1,7 +1,7 @@
+
 from django.shortcuts import render, redirect
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_GET
 from django.http import JsonResponse
-from django.views.decorators.http import require_GET
 
 SAMPLE_REVIEWS = {
     1: [
@@ -9,51 +9,93 @@ SAMPLE_REVIEWS = {
             "id": 1,
             "dealership": 1,
             "name": "Alex",
-            "review": "Excellent customer service and helpful staff."
+            "review": "Excellent customer service and helpful staff.",
+            "purchase": {
+                "car_make": "Toyota",
+                "car_model": "Camry",
+                "car_year": 2024,
+                "purchase_date": "2026-01-15",
+            },
         },
         {
             "id": 2,
             "dealership": 1,
             "name": "Jordan",
-            "review": "The buying process was smooth and easy."
-        }
+            "review": "The buying process was smooth and easy.",
+            "purchase": {
+                "car_make": "Honda",
+                "car_model": "Civic",
+                "car_year": 2023,
+                "purchase_date": "2026-02-10",
+            },
+        },
     ],
     2: [
         {
             "id": 3,
             "dealership": 2,
             "name": "Taylor",
-            "review": "Good selection of cars."
-        }
+            "review": "Good selection of cars.",
+            "purchase": {
+                "car_make": "Ford",
+                "car_model": "Mustang",
+                "car_year": 2024,
+                "purchase_date": "2026-03-05",
+            },
+        },
     ],
     3: [
         {
             "id": 4,
             "dealership": 3,
             "name": "Morgan",
-            "review": "Friendly staff and a good range of vehicles."
+            "review": "Friendly staff and a good range of vehicles.",
+            "purchase": {
+                "car_make": "Toyota",
+                "car_model": "Corolla",
+                "car_year": 2022,
+                "purchase_date": "2026-04-12",
+            },
         },
         {
             "id": 5,
             "dealership": 3,
             "name": "Casey",
-            "review": "The staff answered all my questions."
-        }
+            "review": "The staff answered all my questions.",
+            "purchase": {
+                "car_make": "Honda",
+                "car_model": "Accord",
+                "car_year": 2023,
+                "purchase_date": "2026-04-20",
+            },
+        },
     ],
     4: [
         {
             "id": 6,
             "dealership": 4,
             "name": "Riley",
-            "review": "Helpful team and a smooth buying experience."
+            "review": "Helpful team and a smooth buying experience.",
+            "purchase": {
+                "car_make": "Honda",
+                "car_model": "Accord",
+                "car_year": 2023,
+                "purchase_date": "2026-05-20",
+            },
         },
         {
             "id": 7,
             "dealership": 4,
             "name": "Jamie",
-            "review": "Good service and clear information about the cars."
-        }
-    ]
+            "review": "Good service and clear information about the cars.",
+            "purchase": {
+                "car_make": "Toyota",
+                "car_model": "Corolla",
+                "car_year": 2022,
+                "purchase_date": "2026-06-02",
+            },
+        },
+    ],
 }
 
 
@@ -64,20 +106,25 @@ def get_dealer_reviews(request, dealer_id):
     if reviews is None:
         return JsonResponse(
             {"error": "No reviews found for this dealer ID."},
-            status=404
+            status=404,
         )
 
     return JsonResponse(
         {"dealer_id": dealer_id, "reviews": reviews},
-        status=200
+        status=200,
     )
+
+
+@require_GET
+def fetch_dealer_reviews(request, dealer_id):
+    return get_dealer_reviews(request, dealer_id)
 
 
 @require_http_methods(["GET", "POST"])
 def post_review_page(request, dealer_id):
-    if not any(dealer["id"] == dealer_id for dealer in __import__(
-        "accounts.dealers", fromlist=["SAMPLE_DEALERS"]
-    ).SAMPLE_DEALERS):
+    from accounts.dealers import SAMPLE_DEALERS
+
+    if not any(dealer["id"] == dealer_id for dealer in SAMPLE_DEALERS):
         return JsonResponse({"error": "Dealer not found."}, status=404)
 
     if request.method == "POST":
@@ -85,18 +132,26 @@ def post_review_page(request, dealer_id):
         review = request.POST.get("review", "").strip()
 
         if name and review:
+            next_id = max(
+                (
+                    item["id"]
+                    for items in SAMPLE_REVIEWS.values()
+                    for item in items
+                ),
+                default=0,
+            ) + 1
+
             SAMPLE_REVIEWS.setdefault(dealer_id, []).append({
-                "id": max(
-                    (
-                        item["id"]
-                        for items in SAMPLE_REVIEWS.values()
-                        for item in items
-                    ),
-                    default=0,
-                ) + 1,
+                "id": next_id,
                 "dealership": dealer_id,
                 "name": name,
                 "review": review,
+                "purchase": {
+                    "car_make": request.POST.get("car_make", ""),
+                    "car_model": request.POST.get("car_model", ""),
+                    "car_year": request.POST.get("car_year", ""),
+                    "purchase_date": request.POST.get("purchase_date", ""),
+                },
             })
             return redirect("get_dealer_reviews", dealer_id=dealer_id)
 
