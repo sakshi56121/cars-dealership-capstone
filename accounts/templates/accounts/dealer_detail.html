@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ dealer.full_name }} - Dealer Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f5f9;
+            margin: 0;
+            padding: 30px;
+            color: #263445;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            padding: 24px;
+            margin-bottom: 22px;
+            border-radius: 10px;
+            box-shadow: 0 2px 9px #00000012;
+        }
+        h1, h2 { color: #174a7e; }
+        .detail { margin: 10px 0; }
+        .review {
+            border-top: 1px solid #ddd;
+            padding: 16px 0;
+        }
+        .review:first-of-type { border-top: none; }
+        .purchase {
+            background: #eef5fb;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        a { color: #145da0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h1>{{ dealer.full_name }}</h1>
+        <p class="detail"><strong>Dealer ID:</strong> {{ dealer.id }}</p>
+        <p class="detail"><strong>Address:</strong> {{ dealer.address }}</p>
+        <p class="detail"><strong>City:</strong> {{ dealer.city }}</p>
+        <p class="detail"><strong>State:</strong> {{ dealer.state }}</p>
+        <p class="detail"><strong>ZIP Code:</strong> {{ dealer.zip }}</p>
+        <p class="detail"><strong>Phone:</strong> {{ dealer.phone }}</p>
+    </div>
+
+    <div class="card">
+        <h2>Customer Reviews</h2>
+
+        {% for review in reviews %}
+            <div class="review">
+                <h3>{{ review.name }}</h3>
+                <p>{{ review.review }}</p>
+                {% if review.purchase %}
+                    <div class="purchase">
+                        <strong>Purchase Details</strong>
+                        <p>Car Make: {{ review.purchase.car_make }}</p>
+                        <p>Car Model: {{ review.purchase.car_model }}</p>
+                        <p>Car Year: {{ review.purchase.car_year }}</p>
+                        <p>Purchase Date: {{ review.purchase.purchase_date }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No reviews are available for this dealer.</p>
+        {% endfor %}
+    </div>
+
+    <p><a href="/fetchDealer/{{ dealer.id }}">View dealer API data</a></p>
+</div>
+</body>
+</html>

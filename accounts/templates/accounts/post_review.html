@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Submit Dealership Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #263445;
+            padding: 30px;
+        }
+        .container {
+            max-width: 650px;
+            margin: 20px auto;
+        }
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000012;
+        }
+        h1 { color: #174a7e; }
+        label {
+            display: block;
+            margin: 16px 0 7px;
+            font-weight: bold;
+        }
+        input, textarea, select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        button {
+            margin-top: 22px;
+            padding: 12px 20px;
+            background: #174a7e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h1>Submit a Dealership Review</h1>
+        <p>Dealer ID: {{ dealer_id }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="name">Your Name</label>
+            <input id="name" name="name" type="text" required>
+
+            <label for="review">Your Review</label>
+            <textarea id="review" name="review" rows="4" required></textarea>
+
+            <label for="car_make">Car Make</label>
+            <input id="car_make" name="car_make" type="text"
+                   placeholder="e.g. Toyota" required>
+
+            <label for="car_model">Car Model</label>
+            <input id="car_model" name="car_model" type="text"
+                   placeholder="e.g. Camry" required>
+
+            <label for="car_year">Car Year</label>
+            <input id="car_year" name="car_year" type="number"
+                   min="1900" max="2100" required>
+
+            <label for="purchase_date">Purchase Date</label>
+            <input id="purchase_date" name="purchase_date"
+                   type="date" required>
+
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

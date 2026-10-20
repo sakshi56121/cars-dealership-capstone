@@ -1,7 +1,8 @@
 
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.views.decorators.http import require_GET
-
+from accounts.reviews import SAMPLE_REVIEWS
 CITIES = [
     ("Houston", "Texas", "77001", 29.7604, -95.3698),
     ("Dallas", "Texas", "75201", 32.7767, -96.7970),
@@ -73,3 +74,24 @@ def get_dealers_by_state(request):
     ]
 
     return JsonResponse(dealers, safe=False, status=200)
+
+
+def dealer_detail_page(request, dealer_id):
+    dealer = next(
+        (item for item in SAMPLE_DEALERS if item["id"] == dealer_id),
+        None,
+    )
+
+    if dealer is None:
+        return JsonResponse({"error": "Dealer not found."}, status=404)
+
+    reviews = SAMPLE_REVIEWS.get(dealer_id, [])
+
+    return render(
+        request,
+        "accounts/dealer_detail.html",
+        {
+            "dealer": dealer,
+            "reviews": reviews,
+        },
+    )
