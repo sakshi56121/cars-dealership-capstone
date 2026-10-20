@@ -14,6 +14,7 @@ from accounts.reviews import (
 )
 from accounts.dealers import (
     get_all_dealers,
+    fetch_dealers,
     get_dealer_by_id,
     get_dealers_by_state,
 )
@@ -44,6 +45,7 @@ urlpatterns = [
 
     # Dealer endpoints
     path("dealers/", get_all_dealers, name="get_all_dealers"),
+    path("fetchDealers", fetch_dealers, name="fetch_dealers"),
     path(
         "dealers/by-state/",
         get_dealers_by_state,
@@ -53,6 +55,16 @@ urlpatterns = [
         "dealer/<int:dealer_id>/",
         get_dealer_by_id,
         name="get_dealer_by_id",
+    ),
+    path(
+        "fetchDealer/<int:dealer_id>",
+        get_dealer_by_id,
+        name="fetch_dealer_by_id",
+    ),
+    path(
+        "fetchDealers/<str:state>",
+        get_dealers_by_state,
+        name="fetch_dealers_by_state",
     ),
 
     # Car makes
