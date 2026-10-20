@@ -1,0 +1,20 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #222;
+}
+.navbar {
+    background-color: #12345a;
+}
+.navbar .nav-link,
+.navbar .navbar-brand {
+    color: white;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link[aria-current="page"] {
+    color: #ffc107;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
