@@ -5,24 +5,35 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 
-@csrf_exempt
-@require_POST
-def login_user(request):
+def authenticate_request(request, username_key):
     try:
         data = json.loads(request.body)
     except (json.JSONDecodeError, UnicodeDecodeError):
-        return JsonResponse(
-            {"error": "Invalid JSON request body."}, status=400)
+        return None, JsonResponse(
+            {"error": "Invalid JSON request body."}, status=400
+        )
+
+    username = data.get(username_key, "")
+    password = data.get("password", "")
 
     user = authenticate(
-        request,
-        username=data.get("username", ""),
-        password=data.get("password", ""),
+        request, username=username, password=password
     )
 
     if user is None:
-        return JsonResponse(
-            {"error": "Invalid username or password."}, status=401)
+        return None, JsonResponse(
+            {"error": "Invalid username or password."}, status=401
+        )
+
+    return user, None
+
+
+@csrf_exempt
+@require_POST
+def login_user(request):
+    user, error = authenticate_request(request, "username")
+    if error:
+        return error
 
     login(request, user)
     return JsonResponse({
@@ -33,9 +44,24 @@ def login_user(request):
 
 @csrf_exempt
 @require_POST
+def djangoapp_login(request):
+    user, error = authenticate_request(request, "userName")
+    if error:
+        return error
+
+    login(request, user)
+    return JsonResponse({
+        "status": "Authenticated",
+        "userName": user.get_username(),
+    })
+
+
+@csrf_exempt
+@require_POST
 def logout_user(request):
     if not request.user.is_authenticated:
         return JsonResponse({"error": "User is not logged in."}, status=401)
 
+    username = request.user.get_username()
     logout(request)
-    return JsonResponse({"message": "Logout successful."})
+    return JsonResponse({"userName": ""})

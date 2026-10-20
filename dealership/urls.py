@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from accounts.views import login_user, logout_user
+from accounts.views import login_user, logout_user, djangoapp_login
 from accounts.reviews import get_dealer_reviews
 from accounts.dealers import (
     get_all_dealers,
@@ -12,6 +12,7 @@ from accounts.car_api import get_all_car_makes
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("login/", login_user, name="login_user"),
+    path("djangoapp/login", djangoapp_login, name="djangoapp_login"),
     path("logout/", logout_user, name="logout_user"),
     path(
         "dealer/<int:dealer_id>/reviews/",
