@@ -1,7 +1,33 @@
-
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods, require_GET
 from django.http import JsonResponse
+
+
+def analyze_sentiment(review_text):
+    """Classify review text using simple keyword matching."""
+    text = review_text.lower()
+
+    positive_words = {
+        "great", "excellent", "good", "helpful", "friendly",
+        "smooth", "easy", "love", "happy", "wonderful",
+    }
+    negative_words = {
+        "bad", "poor", "terrible", "awful", "worst",
+        "rude", "slow", "disappointed", "unhelpful",
+    }
+
+    words = set(
+        text.replace(".", " ").replace(",", " ").split()
+    )
+    positive = len(words & positive_words)
+    negative = len(words & negative_words)
+
+    if positive > negative:
+        return {"label": "Positive", "icon": "😊"}
+    if negative > positive:
+        return {"label": "Negative", "icon": "☹️"}
+    return {"label": "Neutral", "icon": "😐"}
+
 
 SAMPLE_REVIEWS = {
     1: [

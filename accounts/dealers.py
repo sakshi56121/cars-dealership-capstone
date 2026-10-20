@@ -2,7 +2,10 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
-from accounts.reviews import SAMPLE_REVIEWS
+
+from accounts.reviews import SAMPLE_REVIEWS, analyze_sentiment
+
+
 CITIES = [
     ("Houston", "Texas", "77001", 29.7604, -95.3698),
     ("Dallas", "Texas", "75201", 32.7767, -96.7970),
@@ -19,7 +22,9 @@ CITIES = [
 SAMPLE_DEALERS = []
 
 for dealer_id in range(1, 51):
-    city, state, zip_code, lat, long = CITIES[(dealer_id - 1) % len(CITIES)]
+    city, state, zip_code, lat, longitude = CITIES[
+        (dealer_id - 1) % len(CITIES)
+    ]
 
     SAMPLE_DEALERS.append({
         "id": dealer_id,
@@ -31,7 +36,7 @@ for dealer_id in range(1, 51):
         "zip": zip_code,
         "phone": f"555-{dealer_id:04d}",
         "lat": lat,
-        "long": long,
+        "long": longitude,
     })
 
 
@@ -53,7 +58,10 @@ def get_dealer_by_id(request, dealer_id):
     )
 
     if dealer is None:
-        return JsonResponse({"error": "Dealer not found."}, status=404)
+        return JsonResponse(
+            {"error": "Dealer not found."},
+            status=404,
+        )
 
     return JsonResponse(dealer, status=200)
 
@@ -83,9 +91,19 @@ def dealer_detail_page(request, dealer_id):
     )
 
     if dealer is None:
-        return JsonResponse({"error": "Dealer not found."}, status=404)
+        return JsonResponse(
+            {"error": "Dealer not found."},
+            status=404,
+        )
 
-    reviews = SAMPLE_REVIEWS.get(dealer_id, [])
+    reviews = []
+
+    for item in SAMPLE_REVIEWS.get(dealer_id, []):
+        review = item.copy()
+        sentiment = analyze_sentiment(review.get("review", ""))
+        review["sentiment"] = sentiment["label"]
+        review["sentiment_icon"] = sentiment["icon"]
+        reviews.append(review)
 
     return render(
         request,
