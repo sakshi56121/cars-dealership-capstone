@@ -1,8 +1,9 @@
+
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 
 
 def authenticate_request(request, username_key):
@@ -60,8 +61,18 @@ def djangoapp_login(request):
 @require_POST
 def logout_user(request):
     if not request.user.is_authenticated:
-        return JsonResponse({"error": "User is not logged in."}, status=401)
+        return JsonResponse(
+            {"error": "User is not logged in."}, status=401
+        )
 
-    username = request.user.get_username()
     logout(request)
+    return JsonResponse({"userName": ""})
+
+
+@csrf_exempt
+@require_GET
+def djangoapp_logout(request):
+    if request.user.is_authenticated:
+        logout(request)
+
     return JsonResponse({"userName": ""})
